@@ -5,4 +5,3 @@ Pliki biblioteki znajdują w katalogu `src`, a test funkcjonalności w katalogu 
 
 # TODO:
  - Testy
- - Interfejsy
