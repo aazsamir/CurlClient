@@ -8,10 +8,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 
-/**
- * PSR7 Client wrapper for cURL
- */
-class Client
+class Client implements ClientInterface
 {
     /**
      * Curl helper.
@@ -49,9 +46,6 @@ class Client
      */
     protected string $method;
 
-    /**
-     * Make new Client instance.
-     */
     public function __construct(string $url = '', mixed $data = null, array $headers = [], string $method = 'GET')
     {
         $this->url = $url;
@@ -60,9 +54,6 @@ class Client
         $this->method = $method;
     }
 
-    /**
-     * Set URL and return self.
-     */
     public function url(string $url): self
     {
         $this->url = $url;
@@ -70,9 +61,6 @@ class Client
         return $this;
     }
 
-    /**
-     * Set data and return self.
-     */
     public function data(mixed $data): self
     {
         $this->data = $data;
@@ -80,9 +68,6 @@ class Client
         return $this;
     }
 
-    /**
-     * Set headers and return self.
-     */
     public function headers(array $headers): self
     {
         $this->headers = $headers;
@@ -90,9 +75,6 @@ class Client
         return $this;
     }
 
-    /**
-     * Set method and return self.
-     */
     public function method(string $method): self
     {
         $this->method = $method;
@@ -100,9 +82,6 @@ class Client
         return $this;
     }
 
-    /**
-     * Send request, and return raw Response
-     */
     public function raw(): ResponseInterface
     {
         $this->request = $this->createRequest();
@@ -114,9 +93,6 @@ class Client
         return $this->response;
     }
 
-    /**
-     * Send request, and try to resolve response format
-     */
     public function send(): null|string|array
     {
         $response = $this->raw();
@@ -134,33 +110,21 @@ class Client
         return $this->data;
     }
 
-    /**
-     * Send request, but expects json response and return an array.
-     */
     public function json(): array
     {
         return json_decode($this->parseResponseData($this->raw()) ?? '', true, 512, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * Get response.
-     */
     public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
 
-    /**
-     * Get request.
-     */
     public function getRequest(): RequestInterface
     {
         return $this->request;
     }
 
-    /**
-     * Get response data.
-     */
     public function getResponseData(): mixed
     {
         $data = $this->parseResponseData($this->response);

@@ -2,10 +2,7 @@
 
 namespace Samir\CurlClient;
 
-/**
- * JWT generator.
- */
-class Jwt
+class Jwt implements JwtInterface
 {
     /**
      * JWT typ
@@ -29,9 +26,6 @@ class Jwt
      */
     protected string $secret;
 
-    /**
-     * Make new JWT instance.
-     */
     public function __construct(string $secret, string $typ = 'JWT', string $alg = 'HS256')
     {
         $this->secret = $secret;
@@ -39,9 +33,6 @@ class Jwt
         $this->alg = $alg;
     }
 
-    /**
-     * Generate JWT.
-     */
     public function generate(array $payload): string
     {
         $header = json_encode([

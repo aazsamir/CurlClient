@@ -15,7 +15,7 @@ try {
 
     $rest_api = new RestApi();
     $users = $rest_api->get(1);
-    $user = $users[0] ?? ['email' => 'asdasd'];
+    $user = $users[0] ?? ['email' => 'test'];
     $return['get'] = $users;
 
     $post = $rest_api->post($user);

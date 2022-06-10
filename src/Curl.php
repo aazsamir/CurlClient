@@ -7,10 +7,7 @@ use Furious\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * Helper class for handling with Curls
- */
-class Curl
+class Curl implements CurlInterface
 {
     /**
      * Request.
@@ -32,17 +29,11 @@ class Curl
      */
     protected const HEADER_NAME_DELIMITER = ': ';
 
-    /**
-     * Make new Curl instance.
-     */
     public function __construct(RequestInterface $request)
     {
         $this->request = $request;
     }
 
-    /**
-     * Init Curl request and return self.
-     */
     public function init(): self
     {
         $curl = curl_init();
@@ -91,9 +82,6 @@ class Curl
         return $this;
     }
 
-    /**
-     * Send request and return Response instance.
-     */
     public function send(): ResponseInterface
     {
         if (is_null($this->curl)) {
