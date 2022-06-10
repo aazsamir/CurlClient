@@ -3,6 +3,7 @@
 namespace App\Api;
 
 use Samir\CurlClient\Client;
+use Samir\CurlClient\Jwt;
 
 /**
  * Api for cat facts
@@ -14,7 +15,11 @@ class CatApi
      */
     public function getCatFact(): ?array
     {
-        $client = new Client('https://catfact.ninja/fact', [], [], 'GET');
+        $jwt = (new Jwt('secret'))->generate(['id_user' => 1]);
+
+        $client = new Client('https://catfact.ninja/fact', null, [
+            'Authorization' => 'Bearer ' . $jwt,
+        ], 'GET');
         $data = $client->send();
 
         return $data;
